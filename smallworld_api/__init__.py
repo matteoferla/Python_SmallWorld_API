@@ -71,4 +71,7 @@ class SmallWorld(Extras):
         df1 = pd.DataFrame(map(operator.itemgetter(0), reply.json()['data']))
         df2 = pd.DataFrame(reply.json()['data']).drop(columns=[0])
         df2.columns = columns[1:]
-        return pd.concat([df1, df2], axis=1)
+        df = pd.concat([df1, df2], axis=1)
+        df['smiles'] = df.hitSmiles.str.split(expand=True)[0]
+        # PandasTools.AddMoleculeColumnToFrame(df,'smiles','molecule',includeFingerprints=True)
+        return df
