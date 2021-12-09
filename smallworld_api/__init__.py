@@ -2,11 +2,6 @@ __all__ = ['SmallWorld']
 
 import operator, re, json
 from warnings import warn
-
-try:
-    from rdkit.Chem import PandasTools
-except ImportError:
-    pass  # just a nicety to avoid issues in Jupyter from import order
 import pandas as pd
 import requests
 from .defaults import Defaults  # class attributes

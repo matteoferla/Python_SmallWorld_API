@@ -7,10 +7,6 @@ from typing import *
 from IPython.display import display, HTML
 from .base import Base  # inherits Defaults
 from collections import namedtuple
-try:
-    from rdkit import Chem
-except ImportError:
-    Chem = namedtuple('Mocked', ['Mol'])('a mock rdkit.Chem.Mol instance')  # mocked.
 
 class Extras(Base):
 
@@ -43,7 +39,8 @@ class Extras(Base):
         return dbs
 
     @staticmethod
-    def check_smiles(smiles: str) -> Chem.Mol:
+    def check_smiles(smiles: str): # -> rdkit.Chem.Mol
+        from rdkit import Chem
         mol = Chem.MolFromSmiles(smiles)
         assert mol is not None
         return mol
