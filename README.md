@@ -14,6 +14,10 @@ The API points of the site are described in
 
 This Python3 module allows one to search it.
 
+## Install
+
+    pip install smallworld-api
+
 ## Usage
 
 ```jupyterpython

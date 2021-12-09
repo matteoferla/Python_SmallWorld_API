@@ -21,7 +21,7 @@ with open(os.path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 description=f'An (unofficial) Python3 module to query the SmallWorld chemical space search server ({sw_url})'
 
 setup(
-    name='smallWorld-api',
+    name='smallworld-api',
     version='0.1',
     packages=find_packages(),
     install_requires=['pandas'],  # rdkit is optional.
