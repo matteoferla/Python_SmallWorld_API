@@ -5,7 +5,7 @@ An (unofficial) Python3 module to query the SmallWorld chemical space search ser
 
 ## Overview
 
-The SmallWorld server (https://sw.docking.org/search.html) allows one to search for similar compounds to
+The SmallWorld server, [sw.docking.org](https://sw.docking.org/search.html), allows one to search for similar compounds to
 a give [SMILES](https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system)
 in one of many databases —a very complex feat.
 
@@ -111,6 +111,20 @@ Which will return (as of writing on the 9th Dec 2021):
 | BB_30.smi.anon                                | BB-30-21Q4-3K              |         3129 |        3119 |            10 |            0 | Available |
 | WorldDrugs-2020Q2-3004.anon                   | WorldDrugs-20Q2-3004       |         3004 |        3003 |             1 |            0 | Available |
 | HMDB-2020Q2-584.anon                          | HMDB-20Q2-584              |          585 |         584 |             1 |            0 | Available |
+
+## Names
+
+There is a Python module called [smallworld](https://github.com/benmaier/smallworld),
+which implements the small world algorithm.
+This is not an API to the [sw.docking.org](https://sw.docking.org/search.html) site.
+
+The blog of the [sw.docking.org](https://sw.docking.org/search.html) site mentions a pysmallworld.
+There is no mention of this in Google so I am guessing it is for a future feature?
+I however need to use this now as 
+I need it as a publicly usable example workflow of [Fragmenstein](https://github.com/matteoferla/Fragmenstein).
+
+Also, there is a great and wacky boardgame called [Small World](https://boardgamegeek.com/boardgame/40692/small-world),
+with a curious/agonising dynamic which forces you to not be a collector.
 
 
 
