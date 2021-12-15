@@ -67,6 +67,8 @@ class SmallWorld(Extras):
         params = {**params, **self.valid_export_columns}
         reply = self._retrieve(url='/search/view',
                                params=params)
+        assert reply.json()["recordsTotal"], 'There was no hits in the reply!'
+        assert reply.json()['data'], 'There was no `data` in the reply!'
         columns = [v for p, v in params.items() if re.match(r'columns\[\d+]\[name]', p)]
         df1 = pd.DataFrame(map(operator.itemgetter(0), reply.json()['data']))
         df2 = pd.DataFrame(reply.json()['data']).drop(columns=[0])
