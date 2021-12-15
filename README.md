@@ -62,11 +62,11 @@ and is probably not okay on the web.
 The database choices can seen with the preset list `SmallWorld.db_choices`.
 But also this can be recached via the classmethod `SmallWorld..retrieve_databases()`.
 
-
 Two databases, `REAL_Space_21Q3_2B(public)` and `REAL_DB_20Q2`, are Enamine REAL databases
-(aka. Enamine will make the compound if you buy it).
+(aka. Enamine will make the compound on request).
 Previously, the repository, [enamine-real-search](https://github.com/xchem/enamine-real-search) was
 good for this, but unfortunately Enamine changed their endpoints. So I wrote this to take its place!
+Despite the smaller number of entries, `REAL_DB_20Q2` gives the most hits and is less likely to "Major Tom out".
 
 Likewise, the attribute `SmallWorld.sf_choices` (type list) and 
 the classmethod `SmallWorld.retrieve_scorefun_options()` do the same.
