@@ -22,7 +22,7 @@ description=f'An (unofficial) Python3 module to query the SmallWorld chemical sp
 
 setup(
     name='smallworld-api',
-    version='0.1',
+    version='0.2',
     packages=find_packages(),
     install_requires=['pandas'],  # rdkit is optional.
     url='https://github.com/matteoferla/Python_SmallWorld_API',
