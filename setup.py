@@ -31,7 +31,7 @@ setup(
     author='Matteo Ferla',
     author_email='matteo@well.ox.ac.uk',
     classifiers=[  # https://pypi.org/classifiers/
-        'Development Status :: 4 - Beta',  # Development Status :: 5 - Production/Stable
+        'Development Status :: 5 - Production/Stable',  # Development Status :: 4 - Beta
         'Intended Audience :: Science/Research',
         'Topic :: Scientific/Engineering :: Chemistry',
         'License :: OSI Approved :: MIT License',
