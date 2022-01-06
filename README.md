@@ -34,33 +34,48 @@ results : pd.DataFrame = sw.search(aspirin, dist=5, db='WorldDrugs-20Q2-3004')
 from IPython.display import display
 display(results)
 ```
-The first two lines are optional.
-The code works without rdkit, but if pandas gets imported before PandasTools
-and Chem imported not in __main__ then display issues happen.
+
+The first two lines are optional. The code works without rdkit, but if pandas gets imported before PandasTools and Chem
+imported not in _main_ then display issues happen.
 
 So it's up to you to remember to run:
 
 ```jupyterpython
-PandasTools.AddMoleculeColumnToFrame(results,'smiles','molecule',includeFingerprints=True)
+PandasTools.AddMoleculeColumnToFrame(results, 'smiles', 'molecule', includeFingerprints=True)
+```
+
+The names of the database do seem to change, so to choose one:
+
+```python
+SmallWorld.retrieve_databases()  # returns a pd.DataFrame (.db_choices gets updated too)
 ```
 
 ## Debug
+
 The instantiation is set up so for debugging, namely it has two attributes of interest:
 
 * `sw.last_reply`, a `requests.Response` instance
 * `sw.hit_list_id` an integer representing the search (AKA. `hlid` in the server responses)
 
-As a result if something goes wrong and one is in a Jupyter notebook one can do `sw.show_reply_as_html()`.
+As a result if something goes wrong by giving a HTML error (status code not 200, eg. 404)
+and one is in a Jupyter notebook one can do `sw.show_reply_as_html()`.
 
-Also, as a shorthand, `mol: Chem.Mol = SmallWorld.check_smiles(aspirin)` 
+If it is not, the result in `.last_reply` should be a JSON string.
+
+```python3
+reply_data: dict = sw.last_reply.json()
+```
+
+Also, as a shorthand, `mol: Chem.Mol = SmallWorld.check_smiles(aspirin)`
 can be called to check if the molecules is fine.
 
-Generally if you get status code 500, it is best to try again tomorrow as the server is having a hard time
-and is probably not okay on the web.
+Generally if you get status code 500, it is best to try again tomorrow as the server is having a hard time and is
+probably not okay on the web.
 
 ## Choices
-The database choices can seen with the preset list `SmallWorld.db_choices`.
-But also this can be recached via the classmethod `SmallWorld..retrieve_databases()`.
+
+The database choices can seen with the preset list `SmallWorld.db_choices`. But also this can be recached via the
+classmethod `SmallWorld..retrieve_databases()`.
 
 Two databases, `REAL_Space_21Q3_2B(public)` and `REAL_DB_20Q2`, are Enamine REAL databases
 (aka. Enamine will make the compound on request).

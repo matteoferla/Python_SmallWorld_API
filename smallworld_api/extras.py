@@ -35,7 +35,7 @@ class Extras(Base):
         dbs = (pd.DataFrame.from_dict(reply.json(), orient='index')
                [['name', 'numEntries', 'numMapped', 'numUnmapped', 'numSkipped', 'status']]
                .sort_values('numMapped', ascending=False))
-        cls.db_choices = dbs.name.to_list()
+        cls.db_choices = dbs.index.to_list()  # previously it was: dbs.name.to_list()
         return dbs
 
     @staticmethod

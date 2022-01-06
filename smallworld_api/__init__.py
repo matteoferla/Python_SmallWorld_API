@@ -1,4 +1,4 @@
-__all__ = ['SmallWorld']
+__all__ = ['SmallWorld', 'NoMatchError']
 
 import operator, re, json
 from warnings import warn
@@ -7,6 +7,17 @@ import requests
 from .defaults import Defaults  # class attributes
 from .base import Base  # inherits Defaults
 from .extras import Extras  # extra methods not required by search
+
+
+class NoMatchError(Exception):
+    """
+    No match for the molecule was found.
+    """
+
+    def __str__(self):
+        return 'The API returned no matches. ' + \
+               '. '.join(map(str, self.args)) + \
+               ' Try a different database (cf. `SmallWorld.retrieve_databases()`'
 
 
 class SmallWorld(Extras):
@@ -32,10 +43,12 @@ class SmallWorld(Extras):
         The dataframe is not rdkit modified yet.
         """
         valids = {k: other_parameters[k] for k in self.valid_submit_keys if k in other_parameters}
-        assert db in self.db_choices, f'{db} is not a valid choice ({self.db_choices}).' + \
-                                      'Check updated with `.retrieve_scorefun_options()'
+        if db not in self.db_choices:
+            warn(f'{db} is not a valid choice ({self.db_choices}).' + \
+                 'Check updated with `.retrieve_scorefun_options()`')
         params = {'smi':  smiles,
                   'db':   db,
+                  **self.default_submission,
                   'dist': int(dist),
                   **valids}
         self.query_summary = self.submit_query(params)
@@ -55,7 +68,8 @@ class SmallWorld(Extras):
         if 'hlid' not in reply_data[-1]:
             raise ValueError(reply_data[-1])
         if reply_data[-1]['status'] != 'END':
-            warn(f"No completed return code returned: {reply_data}")  # "Ground Control to Major Tom"? Groan.
+            # "Ground Control to Major Tom" means there is no signal.
+            warn(f"No completed return code returned: {reply_data} (generally harmless)")
         return reply_data[-1]
 
     def get_results(self, start: int = 0, length: int = 10, draw: int = 10) -> pd.DataFrame:
@@ -67,11 +81,17 @@ class SmallWorld(Extras):
         params = {**params, **self.valid_export_columns}
         reply = self._retrieve(url='/search/view',
                                params=params)
-        assert reply.json()["recordsTotal"], 'There was no hits in the reply!'
-        assert reply.json()['data'], 'There was no `data` in the reply!'
+        if not reply.json()["recordsTotal"]:
+            raise NoMatchError(f'There are {reply.json()["recordsTotal"]} hits in the reply')
+        reply_data = reply.json()['data']
+        if not reply_data:
+            raise NoMatchError('There is no `data` in the reply!')
+        # expand the first column
+        df1 = pd.DataFrame(map(operator.itemgetter(0), reply_data))
+        if len(df1) == 0:
+            raise NoMatchError('Reply generated an empty table')
+        df2 = pd.DataFrame(reply_data).drop(columns=[0])
         columns = [v for p, v in params.items() if re.match(r'columns\[\d+]\[name]', p)]
-        df1 = pd.DataFrame(map(operator.itemgetter(0), reply.json()['data']))
-        df2 = pd.DataFrame(reply.json()['data']).drop(columns=[0])
         df2.columns = columns[1:]
         df = pd.concat([df1, df2], axis=1)
         df['smiles'] = df.hitSmiles.str.split(expand=True)[0]

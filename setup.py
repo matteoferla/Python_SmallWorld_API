@@ -22,13 +22,23 @@ description=f'An (unofficial) Python3 module to query the SmallWorld chemical sp
 
 setup(
     name='smallworld-api',
-    version='0.2',
+    version='0.3',
+    python_requires='>=3.7',
     packages=find_packages(),
     install_requires=['pandas'],  # rdkit is optional.
     url='https://github.com/matteoferla/Python_SmallWorld_API',
     license='MIT',
     author='Matteo Ferla',
     author_email='matteo@well.ox.ac.uk',
+    classifiers=[  # https://pypi.org/classifiers/
+        'Development Status :: 4 - Beta',  # Development Status :: 5 - Production/Stable
+        'Intended Audience :: Science/Research',
+        'Topic :: Scientific/Engineering :: Chemistry',
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+    ],
     description=description,
     long_description=__doc__,
     long_description_content_type='text/markdown'
