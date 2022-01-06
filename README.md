@@ -1,12 +1,16 @@
 # Python_SmallWorld_API
+
 > This is Unofficial. So please do not abuse it or use it when you cannot legally use the site!
 
-An (unofficial) Python3 module to query the SmallWorld chemical space search server (https://sw.docking.org/search.html).
+An (unofficial) Python3 module to query the SmallWorld chemical space search server (https://sw.docking.org/search.html)
+.
+
+[![https img shields io pypi v smallworld api logo python](https://img.shields.io/pypi/v/smallworld--api?logo=python)](https://pypi.org/project/smallworld--api)   [![https img shields io pypi pyversions smallworld api logo python](https://img.shields.io/pypi/pyversions/smallworld--api?logo=python)](https://pypi.org/project/smallworld--api)   [![https img shields io pypi wheel smallworld api logo python](https://img.shields.io/pypi/wheel/smallworld--api?logo=python)](https://pypi.org/project/smallworld--api)   [![https img shields io pypi format smallworld api logo python](https://img.shields.io/pypi/format/smallworld--api?logo=python)](https://pypi.org/project/smallworld--api)   [![https img shields io pypi status smallworld api logo python](https://img.shields.io/pypi/status/smallworld--api?logo=python)](https://pypi.org/project/smallworld--api)   [![https img shields io pypi dm smallworld api logo python](https://img.shields.io/pypi/dm/smallworld--api?logo=python)](https://pypi.org/project/smallworld--api)   [![https img shields io codeclimate maintainability matteoferla Python_SmallWorld_API logo codeclimate](https://img.shields.io/codeclimate/maintainability/matteoferla/Python_SmallWorld_API?logo=codeclimate)](https://codeclimate.com/github/matteoferla/Python_SmallWorld_API)   [![https img shields io codeclimate issues matteoferla Python_SmallWorld_API logo codeclimate](https://img.shields.io/codeclimate/issues/matteoferla/Python_SmallWorld_API?logo=codeclimate)](https://codeclimate.com/github/matteoferla/Python_SmallWorld_API)   [![https img shields io codeclimate tech debt matteoferla Python_SmallWorld_API logo codeclimate](https://img.shields.io/codeclimate/tech-debt/matteoferla/Python_SmallWorld_API?logo=codeclimate)](https://codeclimate.com/github/matteoferla/Python_SmallWorld_API)   [![https img shields io github forks matteoferla Python_SmallWorld_API label Fork style social logo github](https://img.shields.io/github/forks/matteoferla/Python_SmallWorld_API?label=Fork&style=social&logo=github)](https://github.com/matteoferla/Python_SmallWorld_API)   [![https img shields io github stars matteoferla Python_SmallWorld_API style social logo github](https://img.shields.io/github/stars/matteoferla/Python_SmallWorld_API?style=social&logo=github)](https://github.com/matteoferla/Python_SmallWorld_API)   [![https img shields io github watchers matteoferla Python_SmallWorld_API label Watch style social logo github](https://img.shields.io/github/watchers/matteoferla/Python_SmallWorld_API?label=Watch&style=social&logo=github)](https://github.com/matteoferla/Python_SmallWorld_API)   [![https img shields io github last commit matteoferla Python_SmallWorld_API logo github](https://img.shields.io/github/last-commit/matteoferla/Python_SmallWorld_API?logo=github)](https://github.com/matteoferla/Python_SmallWorld_API)   [![https img shields io github license matteoferla Python_SmallWorld_API logo github](https://img.shields.io/github/license/matteoferla/Python_SmallWorld_API?logo=github)](https://github.com/matteoferla/Python_SmallWorld_API/raw/master/LICENCE)   [![https img shields io github release date matteoferla Python_SmallWorld_API logo github](https://img.shields.io/github/release-date/matteoferla/Python_SmallWorld_API?logo=github)](https://github.com/matteoferla/Python_SmallWorld_API)   [![https img shields io github commit activity m matteoferla Python_SmallWorld_API logo github](https://img.shields.io/github/commit-activity/m/matteoferla/Python_SmallWorld_API?logo=github)](https://github.com/matteoferla/Python_SmallWorld_API)   [![https img shields io github issues matteoferla Python_SmallWorld_API logo github](https://img.shields.io/github/issues/matteoferla/Python_SmallWorld_API?logo=github)](https://github.com/matteoferla/Python_SmallWorld_API)   [![https img shields io github issues closed matteoferla Python_SmallWorld_API logo github](https://img.shields.io/github/issues-closed/matteoferla/Python_SmallWorld_API?logo=github)](https://github.com/matteoferla/Python_SmallWorld_API)
 
 ## Overview
 
-The SmallWorld server, [sw.docking.org](https://sw.docking.org/search.html), allows one to search for similar compounds to
-a give [SMILES](https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system)
+The SmallWorld server, [sw.docking.org](https://sw.docking.org/search.html), allows one to search for similar compounds
+to a give [SMILES](https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system)
 in one of many databases —a very complex feat.
 
 The API points of the site are described in
@@ -57,30 +61,46 @@ The instantiation is set up so for debugging, namely it has two attributes of in
 * `sw.last_reply`, a `requests.Response` instance
 * `sw.hit_list_id` an integer representing the search (AKA. `hlid` in the server responses)
 
-As a result if something goes wrong by giving a HTML error (status code not 200, eg. 404)
-and one is in a Jupyter notebook one can do `sw.show_reply_as_html()`.
+The errors raised are generally either `requests.HTTPError`
+or `smallworld.NoMatchError`. The former is raised by a `requests.Response.raise_for_status` call and means there is a
+status code that isn't 200, the latter is raised by one of the various checks in `sw.get_results()`.
 
-If it is not, the result in `.last_reply` should be a JSON string.
+For the former errors, i.e. those by a serverside-declared HTML-formatting error (eg. status code 404), if one is in a
+Jupyter notebook one can do `sw.show_reply_as_html()`. Generally if you get status code 500, it is best to try again
+tomorrow as the server is having a hard time and is probably not okay on the web.
+
+For the latter, the result in `.last_reply` should be a JSON string, therefore should give something like this:
 
 ```python3
 reply_data: dict = sw.last_reply.json()
 ```
 
+A common issue is the change in database names, therefore do do and pick a different one
+(ATM, the index of the dataframe is the name to use, but in 2021 it was the `name`)
+
+```python3
+from IPython.display import display
+
+from smallworld_api import SmallWorld
+db_table : pd.DataFrame = SmallWorld.retrieve_databases()
+display( db_table )
+```
+
+There will be a "ground control to major Tom" warning in the first query. This weird reply means that the stream has
+finished, but not closed or something. Ignore it.
+
 Also, as a shorthand, `mol: Chem.Mol = SmallWorld.check_smiles(aspirin)`
 can be called to check if the molecules is fine.
-
-Generally if you get status code 500, it is best to try again tomorrow as the server is having a hard time and is
-probably not okay on the web.
 
 ## Choices
 
 The database choices can seen with the preset list `SmallWorld.db_choices`. But also this can be recached via the
-classmethod `SmallWorld..retrieve_databases()`.
+classmethod `SmallWorld.retrieve_databases()`.
 
 Two databases, `REAL_Space_21Q3_2B(public)` and `REAL_DB_20Q2`, are Enamine REAL databases
-(aka. Enamine will make the compound on request).
-Previously, the repository, [enamine-real-search](https://github.com/xchem/enamine-real-search) was
-good for this, but unfortunately Enamine changed their endpoints. So I wrote this to take its place!
+(aka. Enamine will make the compound on request). Previously, the
+repository, [enamine-real-search](https://github.com/xchem/enamine-real-search) was good for this, but unfortunately
+Enamine changed their endpoints. So I wrote this to take its place!
 Despite the smaller number of entries, `REAL_DB_20Q2` gives the most hits and is less likely to "Major Tom out".
 
 Likewise, the attribute `SmallWorld.sf_choices` (type list) and 
