@@ -33,14 +33,14 @@ from smallworld_api import SmallWorld
 
 aspirin = 'O=C(C)Oc1ccccc1C(=O)O'
 sw = SmallWorld()
-results : pd.DataFrame = sw.search(aspirin, dist=5, db='WorldDrugs-20Q2-3004')
+results : pd.DataFrame = sw.search(aspirin, dist=5, db=sw.REAL_dataset)
 
 from IPython.display import display
 display(results)
 ```
 
-The first two lines are optional. The code works without rdkit, but if pandas gets imported before PandasTools and Chem
-imported not in _main_ then display issues happen.
+The first two import lines are optional. The code works without rdkit, but if pandas gets imported before PandasTools
+and Chem imported not in _main_ then display issues happen.
 
 So it's up to you to remember to run:
 
@@ -48,11 +48,15 @@ So it's up to you to remember to run:
 PandasTools.AddMoleculeColumnToFrame(results, 'smiles', 'molecule', includeFingerprints=True)
 ```
 
-The names of the database do seem to change, so to choose one:
+The argument `db` for `.search` is a string and is the name of the database. These do seem to change, so to update the
+class and choose one call:
 
 ```python
-SmallWorld.retrieve_databases()  # returns a pd.DataFrame (.db_choices gets updated too)
+SmallWorld.retrieve_databases()  #: pd.DataFrame (.db_choices gets updated too)
 ```
+
+The dynamic properties `.REAL_dataset` and `.ZINC_dataset` simply return the best value from the presets, which may have
+become out of date (unless updated).
 
 ## Debug
 

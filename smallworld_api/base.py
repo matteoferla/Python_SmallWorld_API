@@ -1,9 +1,9 @@
 import requests
-from .defaults import Defaults
+from .common_db import Common
 from typing import *
 
 
-class Base(Defaults):
+class Base(Common):  # Defaults -> Common -> Base -> Extras -> SmallWorld
 
     def __init__(self):
         """

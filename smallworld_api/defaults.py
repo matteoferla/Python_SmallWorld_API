@@ -1,34 +1,13 @@
-class Defaults:
+class Defaults:  # Defaults -> Common -> Base -> Extras -> SmallWorld
 
     base_url = 'https://sw.docking.org'
     stream_response = False
 
-    # database choice list is updated with ``df = SWSearcher.retrieve_databases()``
-    db_choices = ['REAL_Space_21Q3_2B(public)',
-                  'ZINC-All-20Q2-1.46B',
-                  'ZINC-For-Sale-20Q2-1.46B',
-                  'ZINC20-ForSale-21Q3-1.4B',
-                  'REAL_DB_20Q2',
-                  'Wait-OK-20Q2-1.2B',
-                  'WuXi-20Q4-600M',
-                  'MculeUltimate_20Q2_126M',
-                  'WuXi-20Q2-120M',
-                  'Mcule_ultimate_20Q2-126M',
-                  'BB-All-20Q2-26.7M',
-                  'In-Stock-20Q2-13.8M',
-                  'ZINC20-InStock-21Q3-11M',
-                  'BB-All-21Q4-3.3M',
-                  'BB-Now-21Q4-2M',
-                  'BB-Now-20Q2-1.6M',
-                  'BB-50-21Q4-1.5M',
-                  'BB-10-21Q4-1.2M',
-                  'BB-40-21Q4-590K',
-                  'ZINC-Interesting-20Q2-320K',
-                  'ZINC-Interesting-20Q2-300K',
-                  'TCNMP-20Q2-31912',
-                  'BB-30-21Q4-3K',
-                  'WorldDrugs-20Q2-3004',
-                  'HMDB-20Q2-584']
+    # database choice list is updated with ``df = SmallWorld.retrieve_databases()``
+    db_choices = ['WuXi-20Q4.smi.anon', 'REAL_Space_21Q3_All_2B_public.smi.anon',
+                  'all-zinc.smi.anon', 'wait-ok.smi.anon', 'MculeUltimate-20Q2.smi.anon',
+                  'instock.smi.anon', 'BBall.smi.anon', 'BBnow.smi.anon',
+                  'interesting.smi.anon']
 
     # most of these are enabled by default
     sf_choices = ['Atom Alignment', 'SMARTS Alignment', 'ECFP4', 'Daylight']

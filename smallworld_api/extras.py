@@ -8,7 +8,7 @@ from IPython.display import display, HTML
 from .base import Base  # inherits Defaults
 from collections import namedtuple
 
-class Extras(Base):
+class Extras(Base):  # Defaults -> Common -> Base -> Extras -> SmallWorld
 
     def show_reply_as_html(self, reply: Optional[requests.Response] = None):
         """

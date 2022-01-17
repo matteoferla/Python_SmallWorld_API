@@ -20,7 +20,7 @@ class NoMatchError(Exception):
                ' Try a different database (cf. `SmallWorld.retrieve_databases()`'
 
 
-class SmallWorld(Extras):
+class SmallWorld(Extras):  # Defaults -> Common -> Base -> Extras -> SmallWorld
     """
     A python3 API based upon https://wiki.docking.org/index.php/How_to_use_SmallWorld_API
     """
