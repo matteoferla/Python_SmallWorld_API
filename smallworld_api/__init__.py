@@ -85,29 +85,33 @@ class SmallWorld(Searcher):  # Defaults -> Common -> Base -> Extras -> Searcher 
             raise TypeError(f'Unrecognised type: {type(query)} for `.search_many_smiles`')
         tick = 0
         for name, item in iterator:
+            # ## what is it?
             if isinstance(item, str):
                 # its a smiles
                 smiles = item
-            elif self.is_this_mol(item):  # rdkit is optional.
+            elif self.is_this_mol(item):
+                # rdkit
                 smiles = self.mol2smiles(item)
             elif not item:
+                # nothing
                 warn(f'Falsy value {item} in the {type(query)} query')
                 continue
             else:
+                # mystery
                 raise TypeError(f'Unrecognised type {type(item)}')
-            # prevent excessive calls
+            # ## prevent excessive calls
             tock = time.time()
             if tick > tock - self.speed_threshold:
                 time.sleep(self.speed_threshold - (tock - tick))
             tick = time.time()
-            # what to capture
+            # ## what to capture
             if 'tolerated_exceptions' in other_parameters:
                 tolerated_exceptions = other_parameters['tolerated_exceptions']
             elif 'tolerate_no_matches' in other_parameters and other_parameters['tolerate_no_matches']:
                 tolerated_exceptions = (NoMatchError,)
             else:
                 tolerated_exceptions = ()
-            # run!
+            # ## run!
             try:
                 result: pd.DataFrame = self.search_smiles(smiles=smiles, db=db, **other_parameters)
                 result['query_index'] = name

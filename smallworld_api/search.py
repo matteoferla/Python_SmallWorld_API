@@ -1,9 +1,11 @@
-import operator, re, json, time
+import json
+import operator
+import re
+from typing import *
 from warnings import warn
 import pandas as pd
 import requests
 from .extras import Extras  # extra methods not required by search
-from typing import *
 from .nomatcherror import NoMatchError
 
 
