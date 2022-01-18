@@ -58,6 +58,18 @@ SmallWorld.retrieve_databases()  #: pd.DataFrame (.db_choices gets updated too)
 The dynamic properties `.REAL_dataset` and `.ZINC_dataset` simply return the best value from the presets, which may have
 become out of date (unless updated).
 
+## Query terms
+
+The first argument passed to `.search` can be:
+
+* a `str` (SMILES)
+* a `Chem.Mol` (rdkit is an optional requirement though)
+* a list-like (sequence) or a dict-like (mapping) of the above, where the index or key becomes the name in the output
+  table.
+
+If one is sure that the correct dataset is being used and any raised `NoMatchError` is due to the SMILES, then once can
+add for the last case the argument `tolerate_tolerate_NoMatchError=True`, which makes them ignored bar for a warning.
+
 ## Debug
 
 The instantiation is set up so for debugging, namely it has two attributes of interest:
