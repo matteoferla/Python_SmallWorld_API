@@ -97,7 +97,7 @@ class SmallWorld(Searcher):  # Defaults -> Common -> Base -> Extras -> Searcher 
                 raise TypeError(f'Unrecognised type {type(item)}')
             # prevent excessive calls
             tock = time.time()
-            if tick + self.speed_threshold < tock:
+            if tick > tock - self.speed_threshold:
                 time.sleep(self.speed_threshold - (tock - tick))
             tick = time.time()
             # what to capture
