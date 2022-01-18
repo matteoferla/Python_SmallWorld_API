@@ -12,6 +12,7 @@ class Base(Common):  # Defaults -> Common -> Base -> Extras -> SmallWorld
         self.last_reply: requests.Response()  # debugging
         self.hit_list_id = -1
         self.session = requests.Session()
+        self.query_summary: Dict[str, Any] = {}
 
     def _retrieve(self, url: str, params: Dict[str, Any]) -> requests.Response:
         """

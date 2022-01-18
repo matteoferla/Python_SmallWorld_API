@@ -1,3 +1,4 @@
+from __future__ import annotations
 import requests
 import operator, re, json
 from warnings import warn
@@ -8,7 +9,11 @@ from IPython.display import display, HTML
 from .base import Base  # inherits Defaults
 from collections import namedtuple
 
-class Extras(Base):  # Defaults -> Common -> Base -> Extras -> SmallWorld
+if TYPE_CHECKING:
+    from rdkit import Chem
+
+
+class Extras(Base):  # Defaults -> Common -> Base -> Extras -> Searcher -> SmallWorld
 
     def show_reply_as_html(self, reply: Optional[requests.Response] = None):
         """
@@ -39,8 +44,15 @@ class Extras(Base):  # Defaults -> Common -> Base -> Extras -> SmallWorld
         return dbs
 
     @staticmethod
-    def check_smiles(smiles: str): # -> rdkit.Chem.Mol
+    def check_smiles(smiles: str):  # -> rdkit.Chem.Mol
         from rdkit import Chem
         mol = Chem.MolFromSmiles(smiles)
         assert mol is not None
         return mol
+
+    def mol2smiles(self, mol: Chem.Mol) -> str:
+        from rdkit import Chem
+        return Chem.MolToSmiles(mol)
+
+    def is_this_mol(self, item: Any) -> bool:
+        return item.__class__.__name__ == 'Mol'

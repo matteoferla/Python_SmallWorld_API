@@ -1,4 +1,4 @@
-class Defaults:  # Defaults -> Common -> Base -> Extras -> SmallWorld
+class Defaults:  # Defaults -> Common -> Base -> Extras -> Searcher -> SmallWorld
 
     base_url = 'https://sw.docking.org'
     stream_response = False

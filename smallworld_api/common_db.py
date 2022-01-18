@@ -2,7 +2,7 @@ import re
 from .defaults import Defaults
 
 
-class Common(Defaults):  # Defaults -> Common -> Base -> Extras -> SmallWorld
+class Common(Defaults):  # Defaults -> Common -> Base -> Extras -> Searcher -> SmallWorld
 
     def _get_year_from_name(self, name) -> float:
         """
