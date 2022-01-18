@@ -107,7 +107,7 @@ class SmallWorld(Searcher):  # Defaults -> Common -> Base -> Extras -> Searcher 
             # ## what to capture
             if 'tolerated_exceptions' in other_parameters:
                 tolerated_exceptions = other_parameters['tolerated_exceptions']
-            elif 'tolerate_no-matches' in other_parameters and other_parameters['tolerate_no-matches']:
+            elif 'tolerate_NoMatchError' in other_parameters and other_parameters['tolerate_NoMatchError']:
                 tolerated_exceptions = (NoMatchError,)
             else:
                 tolerated_exceptions = ()
