@@ -24,6 +24,12 @@ class Defaults:  # Defaults -> Common -> Base -> Extras -> Searcher -> SmallWorl
                           'min':  6,
                           'sub':  6}
 
+    @property
+    def speed_threshold(self):
+        # user cannot change!
+        # max 5 secs between each query
+        return 5
+
     # this is the required information (kind of)
     valid_export_columns = {'columns[0][data]':           '0',
                             'columns[0][name]':           'alignment',

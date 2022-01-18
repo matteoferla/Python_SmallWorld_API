@@ -10,6 +10,7 @@ from .extras import Extras  # extra methods not required by search
 from typing import *
 from .nomatcherror import NoMatchError
 from .search import Searcher
+import time
 
 if TYPE_CHECKING:
     from rdkit import Chem
@@ -82,6 +83,7 @@ class SmallWorld(Searcher):  # Defaults -> Common -> Base -> Extras -> Searcher 
             iterator = query.items()
         else:
             raise TypeError(f'Unrecognised type: {type(query)} for `.search_many_smiles`')
+        tick = 0
         for name, item in iterator:
             if isinstance(item, str):
                 # its a smiles
@@ -93,10 +95,26 @@ class SmallWorld(Searcher):  # Defaults -> Common -> Base -> Extras -> Searcher 
                 continue
             else:
                 raise TypeError(f'Unrecognised type {type(item)}')
-            result: pd.DataFrame = self.search_smiles(smiles=smiles, db=db, **other_parameters)
-            result['query_index'] = name
-            result['query_smiles'] = smiles
-            results.append(result)
+            # prevent excessive calls
+            tock = time.time()
+            if tick + self.speed_threshold < tock:
+                time.sleep(self.speed_threshold - (tock - tick))
+            tick = time.time()
+            # what to capture
+            if 'tolerated_exceptions' in other_parameters:
+                tolerated_exceptions = other_parameters['tolerated_exceptions']
+            elif 'tolerate_no_matches' in other_parameters and other_parameters['tolerate_no_matches']:
+                tolerated_exceptions = (NoMatchError,)
+            else:
+                tolerated_exceptions = ()
+            # run!
+            try:
+                result: pd.DataFrame = self.search_smiles(smiles=smiles, db=db, **other_parameters)
+                result['query_index'] = name
+                result['query_smiles'] = smiles
+                results.append(result)
+            except tolerated_exceptions as error:
+                warn(f'{error.__class__.__name__}: {error} for {name}')
         return pd.concat(results, axis='index', ignore_index=True)
 
     def search(self, query: Any, db: str, **other_parameters) -> pd.DataFrame:
