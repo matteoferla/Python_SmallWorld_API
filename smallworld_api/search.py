@@ -23,7 +23,7 @@ class Searcher(Extras):  # Defaults -> Common -> Base -> Extras -> Searcher -> S
             raise ValueError(reply_data[-1])
         if reply_data[-1]['status'] != 'END':
             # "Ground Control to Major Tom" means there is no signal.
-            warn(f"No completed return code returned: {reply_data} (generally harmless)")
+            warn(f"No completed return code returned (generally harmless). See `.query_summary` for actual response")
         return reply_data[-1]
 
     def get_results(self, start: int = 0, length: int = 10, draw: int = 10) -> pd.DataFrame:
