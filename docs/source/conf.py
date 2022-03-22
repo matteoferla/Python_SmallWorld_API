@@ -44,7 +44,7 @@ templates_path = ['_templates']
 always_document_param_types = True
 typehints_defaults = 'braces'
 
-from m2r import parse_from_file  # noqa
+from m2r2 import parse_from_file  # noqa
 
 for markdown_filename, srt_filename in {'../../README.md': 'readme.rst',
                                         '../../export_note.md': 'export_note.rst'}.items():
