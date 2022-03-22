@@ -25,7 +25,7 @@ setup(
     version='1.0',
     python_requires='>=3.7',
     packages=find_packages(),
-    install_requires=['pandas'],  # rdkit is optional.
+    install_requires=['pandas', 'requests', 'ipython'],  # rdkit is optional.
     url='https://github.com/matteoferla/Python_SmallWorld_API',
     license='MIT',
     author='Matteo Ferla',
