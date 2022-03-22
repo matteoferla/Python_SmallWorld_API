@@ -33,7 +33,7 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.todo',
     'sphinx_autodoc_typehints',
-    'sphinx.ext.imgconverter',
+    #'sphinx.ext.imgconverter',
     #'m2r'
 ]
 
