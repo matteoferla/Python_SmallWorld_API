@@ -24,7 +24,7 @@ This Python3 module allows one to search it.
 
 ## Usage
 
-```jupyterpython
+```python
 from rdkit import Chem
 from rdkit.Chem import PandasTools
 import pandas as pd  # for typehinting below
@@ -44,7 +44,7 @@ and Chem imported not in _main_ then display issues happen.
 
 So it's up to you to remember to run:
 
-```jupyterpython
+```python
 PandasTools.AddMoleculeColumnToFrame(results, 'smiles', 'molecule', includeFingerprints=True)
 ```
 
@@ -126,7 +126,7 @@ are activated by default and will be visible as columns in the resulting datafra
 
 Here is the full list of databases:
 
-```jupyterpython
+```python
 import pandas as pd
 
 choices: pd.DataFrame = SmallWorld.retrieve_databases()
