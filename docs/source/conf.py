@@ -14,9 +14,7 @@
 #
 import os
 import sys
-print(os.path.abspath("../../"))
-print(os.listdir(os.path.abspath("../../")))
-#sys.path.insert(0, os.path.abspath("../../"))
+sys.path.insert(0, os.path.abspath("../../"))
 
 # -- Project information -----------------------------------------------------
 
