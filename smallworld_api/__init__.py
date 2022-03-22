@@ -16,13 +16,17 @@ if TYPE_CHECKING:
     from rdkit import Chem
 
 
-class SmallWorld(Searcher):  # Defaults -> Common -> Base -> Extras -> Searcher -> SmallWorld
+class SmallWorld(Searcher):
 
     """
     A python3 API based upon https://wiki.docking.org/index.php/How_to_use_SmallWorld_API
-    """
 
-    # class attributes are in Defaults.
+    This (``SmallWorld``) is the main class of the module ``smallworld_api`` and is split into separate files
+    by functionality. The classes it bases are as follows:
+    Defaults -> Common -> Base -> Extras -> Searcher -> SmallWorld
+
+    For example, class attributes are in Defaults.
+    """
 
     def search_smiles(self,
                       smiles: str,
