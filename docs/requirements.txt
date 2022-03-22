@@ -1,5 +1,4 @@
 sphinx-autodoc-typehints
-mistune==0.8.4
 m2r
 pandas
 rdkit-pypi
