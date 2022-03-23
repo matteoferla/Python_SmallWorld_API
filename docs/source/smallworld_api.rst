@@ -6,51 +6,8 @@ smallworld\_api package
    :undoc-members:
    :show-inheritance:
 
-smallworld\_api.base module
----------------------------
-
-.. automodule:: smallworld_api.base
+.. autoclass:: SmallWorld
    :members:
-   :undoc-members:
-   :show-inheritance:
+   :inherited-members:
 
-smallworld\_api.common\_db module
----------------------------------
-
-.. automodule:: smallworld_api.common_db
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-smallworld\_api.defaults module
--------------------------------
-
-.. automodule:: smallworld_api.defaults
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-smallworld\_api.extras module
------------------------------
-
-.. automodule:: smallworld_api.extras
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-smallworld\_api.nomatcherror module
------------------------------------
-
-.. automodule:: smallworld_api.nomatcherror
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-smallworld\_api.search module
------------------------------
-
-.. automodule:: smallworld_api.search
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
+.. autoexception:: NoMatchError
