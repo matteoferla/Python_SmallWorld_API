@@ -10,9 +10,9 @@ from .extras import Extras  # extra methods not required by search
 from typing import *
 from .nomatcherror import NoMatchError
 from .search import Searcher
-import time
+import time, sys
 
-if TYPE_CHECKING:
+if TYPE_CHECKING or 'sphinx' in sys.modules:
     from rdkit import Chem
 
 

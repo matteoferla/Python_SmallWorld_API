@@ -32,7 +32,8 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.viewcode',
     'sphinx.ext.todo',
-    'sphinx_autodoc_typehints',
+    'sphinx_toolbox.more_autodoc.typehints',
+    'readthedocs_ext.readthedocs',
     #'sphinx.ext.imgconverter',
     #'m2r'
 ]

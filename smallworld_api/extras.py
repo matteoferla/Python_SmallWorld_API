@@ -1,5 +1,4 @@
 from __future__ import annotations
-import requests
 import operator, re, json
 from warnings import warn
 import pandas as pd
@@ -8,8 +7,9 @@ from typing import *
 from IPython.display import display, HTML
 from .base import Base  # inherits Defaults
 from collections import namedtuple
+import sys
 
-if TYPE_CHECKING:
+if TYPE_CHECKING or 'sphinx' in sys.modules:
     from rdkit import Chem
 
 
