@@ -5,9 +5,10 @@
 # list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
-import os
-import sys
-sys.path.insert(0, os.path.abspath("../../"))
+# ``.readthedocs.yaml` installs it.
+# import os
+# import sys
+# sys.path.insert(0, os.path.abspath("../../"))
 
 # -- Project information -----------------------------------------------------
 
@@ -21,11 +22,11 @@ github_repository = 'Python_SmallWorld_API'
 # -- General configuration ---------------------------------------------------
 
 extensions = [
+    'readthedocs_ext.readthedocs',
     'sphinx.ext.viewcode',
     'sphinx.ext.todo',
-    'sphinx_toolbox.more_autodoc',
+    #'sphinx_toolbox.more_autodoc',
     'sphinx.ext.autodoc',
-    'readthedocs_ext.readthedocs',
     #'sphinx.ext.imgconverter',
     #'m2r'
 ]
