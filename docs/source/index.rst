@@ -11,8 +11,8 @@ Welcome to smallworld_api's documentation!
    :caption: Contents:
 
    readme
-   export_note
    smallworld_api
+   export_note
 
 
 Indices and tables
