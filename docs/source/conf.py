@@ -25,7 +25,7 @@ extensions = [
     'readthedocs_ext.readthedocs',
     'sphinx.ext.viewcode',
     'sphinx.ext.todo',
-    #'sphinx_toolbox.more_autodoc',
+    'sphinx_toolbox.more_autodoc',
     'sphinx.ext.autodoc',
     #'sphinx.ext.imgconverter',
     #'m2r'
@@ -46,7 +46,7 @@ for markdown_filename, srt_filename in {'../../README.md': 'readme.rst',
 
 language = 'en'
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
-# html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
 todo_include_todos = True
 
 def skip(app, what, name, obj, would_skip, options):
