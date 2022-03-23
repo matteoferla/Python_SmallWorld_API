@@ -1,11 +1,11 @@
 smallworld\_api package
 =======================
 
-.. autoclass:: SmallWorld
+.. automodule:: smallworld_api
    :members:
    :inherited-members:
-
-.. autoexception:: NoMatchError
+   :undoc-members:
+   :show-inheritance:
 
 Private inherited classes
 ==========================
