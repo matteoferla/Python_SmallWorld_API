@@ -1,4 +1,8 @@
 from __future__ import annotations
+"""
+The primary class in the smallworld_api module is ``SmallWorld``.
+All other classes, in other files are inherited by this.
+"""
 
 __all__ = ['SmallWorld', 'NoMatchError']
 
