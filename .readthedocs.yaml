@@ -8,10 +8,10 @@ build:
 sphinx:
    configuration: docs/source/conf.py
    builder: html
-   fail_on_warning: true
+   fail_on_warning: false
 
 python:
    install:
      - method: pip
-     path: .
+       path: .
    - requirements: docs/requirements.txt
