@@ -71,7 +71,14 @@ class SmallWorld(Searcher):
                   **valids}
         self.query_summary: Dict[str, Any] = self.submit_query(params)
         self.hit_list_id: int = self.query_summary['hlid']
-        return self.get_results(start, length, draw)
+        try:
+            results = self.get_results(start, length, draw)
+        except BaseException as error:
+            warn(f'{error.__class__.__name__}: {error} was raised. '+
+                 'Retrying in 2 seconds. There may be connection issues')
+            time.sleep(2)
+            results = self.get_results(start, length, draw)
+        return results
 
     def search_mol(self,
                    mol: Chem.Mol,
@@ -84,11 +91,16 @@ class SmallWorld(Searcher):
                     query: Union[Sequence[Any], Mapping[str, Any]],
                     db: str,
                     **other_parameters) -> pd.DataFrame:
+        """
+        search for many SMILES or Chem.Mol.
+        """
         results: List[pd.DataFrame] = []
         if isinstance(query, Sequence):  # list or tuple etc.
             iterator = enumerate(query)
         elif isinstance(query, Mapping):  # dict etc.
             iterator = query.items()
+        elif isinstance(query, pd.Series):  # a pd.Series is not a sequence or a mapping apparently
+            iterator = query.to_dict().items()
         else:
             raise TypeError(f'Unrecognised type: {type(query)} for `.search_many_smiles`')
         tick = 0
@@ -121,6 +133,7 @@ class SmallWorld(Searcher):
                 tolerated_exceptions = ()
             # ## run!
             try:
+                self.reset()
                 result: pd.DataFrame = self.search_smiles(smiles=smiles, db=db, **other_parameters)
                 result['query_index'] = name
                 result['query_smiles'] = smiles

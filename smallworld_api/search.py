@@ -50,6 +50,7 @@ class Searcher(Extras):  # Defaults -> Common -> Base -> Extras -> Searcher -> S
         columns = [v for p, v in params.items() if re.match(r'columns\[\d+]\[name]', p)]
         df2.columns = columns[1:]
         df = pd.concat([df1, df2], axis=1)
+        df['name'] = df.hitSmiles.str.split(expand=True)[1]
         df['smiles'] = df.hitSmiles.str.split(expand=True)[0]
         # PandasTools.AddMoleculeColumnToFrame(df,'smiles','molecule',includeFingerprints=True)
         return df

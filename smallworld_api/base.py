@@ -14,6 +14,9 @@ class Base(Common):  # Defaults -> Common -> Base -> Extras -> SmallWorld
         self.session = requests.Session()
         self.query_summary: Dict[str, Any] = {}
 
+    def reset(self):
+        self.__init__()
+
     def _retrieve(self, url: str, params: Dict[str, Any]) -> requests.Response:
         """
         This is convoluted for debugging.
