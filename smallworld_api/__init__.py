@@ -125,7 +125,9 @@ class SmallWorld(Searcher):
                 time.sleep(self.speed_threshold - (tock - tick))
             tick = time.time()
             # ## what to capture
-            if 'tolerated_exceptions' in other_parameters:
+            if 'tolerate_all_exceptions' in other_parameters:
+                tolerated_exceptions = (Exception,)
+            elif 'tolerated_exceptions' in other_parameters:
                 tolerated_exceptions = other_parameters['tolerated_exceptions']
             elif 'tolerate_NoMatchError' in other_parameters and other_parameters['tolerate_NoMatchError']:
                 tolerated_exceptions = (NoMatchError,)
