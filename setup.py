@@ -14,15 +14,19 @@ if sys.version_info.major != 3 or sys.version_info.minor < 6:
 
 # -------------- fill docstring
 import os
-this_directory = os.path.abspath(os.path.dirname(__file__))
-with open(os.path.join(this_directory, 'README.md'), encoding='utf-8') as f:
-    __doc__ = f.read()
 
-description=f'An (unofficial) Python3 module to query the SmallWorld chemical space search server ({sw_url})'
+this_directory = os.path.abspath(os.path.dirname(__file__))
+__doc__ = 'Smallworld API'
+if os.path.exists(os.path.join(this_directory, 'README.md')):
+    # there is no manifest.in file, so it could be missing
+    with open(os.path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+        __doc__ = f.read()
+
+description = f'An (unofficial) Python3 module to query the SmallWorld chemical space search server ({sw_url})'
 
 setup(
     name='smallworld-api',
-    version='1.1',
+    version='1.1.1',
     python_requires='>=3.7',
     packages=find_packages(),
     install_requires=['pandas', 'requests', 'ipython'],  # rdkit is optional.
