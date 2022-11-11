@@ -68,6 +68,21 @@ The first argument passed to `.search` can be:
 * a list-like (sequence) or a dict-like (mapping) of the above, where the index or key becomes the name in the output
   table.
 
+See the class attribute dictionary `SmallWorld.default_submission` for what the defaults are set to, which ought to be:
+
+  {'dist': 8,
+   'tdn': 6,
+   'rdn': 6,
+   'rup': 2,
+   'ldn': 2,
+   'lup': 2,
+   'maj': 6,
+   'min': 6,
+   'sub': 6,
+   'sdist': 12,
+   'tup': 6,
+   'scores': 'Atom Alignment,ECFP4,Daylight'}
+
 If one is sure that the correct dataset is being used and any raised `NoMatchError` is due to the SMILES, then once can
 add for the last case the argument `tolerate_tolerate_NoMatchError=True`, which makes them ignored bar for a warning.
 
@@ -108,6 +123,33 @@ finished, but not closed or something. Ignore it.
 
 Also, as a shorthand, `mol: Chem.Mol = SmallWorld.check_smiles(aspirin)`
 can be called to check if the molecules is fine.
+
+For extreme debugging, open Chrome and go to [sw.docking.org](https://sw.docking.org/search.html) 
+and open the developer tools (F12). Then go to the Network tab and do a search, eg. with `CC2=CC=C(CNC(=O)C1CCC1)C=N2`,
+this will be populated by all the figure requests, but `/search/submit` will be the first one to look at
+if the issue is with the submit method in the trace, `/search/view` if it's with the `get_results` method.
+Then simply copy the url query off the request and use it as parameters or compare them etc. For example:
+
+```python3
+import urllib.parse
+from smallworld_api import SmallWorld
+
+url_query = '👾=👾&👾=👾'
+expected = dict(urllib.parse.parse_qsl(url_query))
+
+class Debug(SmallWorld):
+    
+    def submit_query(self, params):
+        # override the method to check the parameters
+        print('Going to use:', params)
+        print('Missing:', set(expected).difference(params))
+        return super().submit_query(expected)
+
+d = Debug()
+d.search('CCO', db=d.REAL_dataset)
+```
+
+If it's a field that change, raise an issue and I'll update the class or do a pull request :pray:.
 
 ## Choices
 
