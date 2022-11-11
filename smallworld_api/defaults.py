@@ -1,7 +1,7 @@
 class Defaults:  # Defaults -> Common -> Base -> Extras -> Searcher -> SmallWorld
 
     base_url = 'https://sw.docking.org'
-    stream_response = False
+    stream_response = True
 
     # database choice list is updated with ``df = SmallWorld.retrieve_databases()``
     db_choices = ['WuXi-20Q4.smi.anon', 'REAL_Space_21Q3_All_2B_public.smi.anon',
@@ -22,7 +22,11 @@ class Defaults:  # Defaults -> Common -> Base -> Extras -> Searcher -> SmallWorl
                           'lup':  2,
                           'maj':  6,
                           'min':  6,
-                          'sub':  6}
+                          'sub':  6,
+                          'sdist': 12,
+                          'tup': 6,
+                          'scores': 'Atom Alignment,ECFP4,Daylight'
+                          }
 
     @property
     def speed_threshold(self):

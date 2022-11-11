@@ -1,6 +1,7 @@
 import json
 import operator
 import re
+import time
 from typing import *
 from warnings import warn
 import pandas as pd
@@ -15,13 +16,23 @@ class Searcher(Extras):  # Defaults -> Common -> Base -> Extras -> Searcher -> S
         """
         The first step.
         """
-        reply: requests.Response = self._retrieve(url='/search/submit', params=params)
-        line_iter = map(bytes.decode, reply.iter_lines())
-        line_iter = map(str.strip, line_iter)
-        line_iter = filter(lambda line: re.search(r'data:', line), line_iter)
-        # using iter_lines + in stream mode does not solve the major tom hanging issue...
-        reply_data = [json.loads(re.sub(r'^data:\s?', '', line)) for line in line_iter]
-        if 'hlid' not in reply_data[-1]:
+        try:
+            reply: requests.Response = self._retrieve(url='/search/submit', params=params)
+            line_iter = reply.iter_lines(decode_unicode=True)
+            line_iter = map(str.strip, line_iter)
+            line_iter = filter(lambda line: re.search(r'data:', line), line_iter)
+            # using iter_lines + in stream mode does not solve the major tom hanging issue...
+            reply_data: List[Dict[str, Any]] = list()
+            hlid = -1
+            for line in line_iter:
+                datum = json.loads(re.sub(r'^data:\s?', '', line))
+                if 'hlid' in datum:
+                    hlid = datum['hlid']
+                reply_data.append(datum)
+                time.sleep(1)
+        except requests.exceptions.ChunkedEncodingError as error:
+            print('ChunkedEncodingError: search may be incomplete')
+        if hlid == -1:
             raise ValueError(reply_data[-1])
         if reply_data[-1]['status'] != 'END':
             # "Ground Control to Major Tom" means there is no signal.
