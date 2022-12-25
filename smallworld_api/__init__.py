@@ -37,7 +37,7 @@ class SmallWorld(Searcher):
         Initialisation results in the updating of the databases.
         """
         super().__init__()
-        if update_dbs:
+        if update_dbs and not self._db_updated:
             self.retrieve_databases()
 
     def search_smiles(self,
