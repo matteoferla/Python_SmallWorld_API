@@ -41,6 +41,8 @@ class Extras(Base):  # Defaults -> Common -> Base -> Extras -> Searcher -> Small
                [['name', 'numEntries', 'numMapped', 'numUnmapped', 'numSkipped', 'status']]
                .sort_values('numMapped', ascending=False))
         cls.db_choices = dbs.index.to_list()  # previously it was: dbs.name.to_list()
+        if not hasattr(cls, '__name__'):  # ``retrieve_databases`` called on instance
+            cls.__class__.db_choices = dbs.index.to_list()
         return dbs
 
     @staticmethod

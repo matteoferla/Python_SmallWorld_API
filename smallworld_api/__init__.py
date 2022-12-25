@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 """
 The primary class in the smallworld_api module is ``SmallWorld``.
 All other classes, in other files are inherited by this.
@@ -21,7 +22,6 @@ if TYPE_CHECKING or 'sphinx' in sys.modules:
 
 
 class SmallWorld(Searcher):
-
     """
     A python3 API based upon https://wiki.docking.org/index.php/How_to_use_SmallWorld_API
 
@@ -31,6 +31,14 @@ class SmallWorld(Searcher):
 
     For example, class attributes are in Defaults.
     """
+
+    def __init__(self, update_dbs: bool = True):
+        """
+        Initialisation results in the updating of the databases.
+        """
+        super().__init__()
+        if update_dbs:
+            self.retrieve_databases()
 
     def search_smiles(self,
                       smiles: str,
@@ -64,8 +72,8 @@ class SmallWorld(Searcher):
         if db not in self.db_choices:
             warn(f'{db} is not a valid choice ({self.db_choices}).' +
                  'Check updated with `.retrieve_scorefun_options()`')
-        params = {'smi':  smiles,
-                  'db':   db,
+        params = {'smi': smiles,
+                  'db': db,
                   **self.default_submission,
                   'dist': int(dist),
                   **valids}
@@ -74,7 +82,7 @@ class SmallWorld(Searcher):
         try:
             results = self.get_results(start, length, draw)
         except BaseException as error:
-            warn(f'{error.__class__.__name__}: {error} was raised. '+
+            warn(f'{error.__class__.__name__}: {error} was raised. ' +
                  'Retrying in 2 seconds. There may be connection issues')
             time.sleep(2)
             results = self.get_results(start, length, draw)
