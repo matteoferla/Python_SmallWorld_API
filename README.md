@@ -21,9 +21,11 @@ This Python3 module allows one to search it.
 
 ## Install
 
-    pip install smallworld-api
+    pip install -q smallworld-api
 
 ## Usage
+The following searches for Aspirin in Enamine's make-on-demand space, Enamine REAL, which does not contain it
+as the latter is filtered by Lipinski's rule of five.
 
 ```python
 from rdkit import Chem
@@ -40,8 +42,9 @@ from IPython.display import display
 display(results)
 ```
 
-The first two import lines are optional. The code works without rdkit, but if pandas gets imported before PandasTools
-and Chem imported not in _main_ then display issues happen.
+The first two import lines are optional as the code works without rdkit. If pandas gets imported before PandasTools
+and Chem imported not in _main_ then display issues happen, 
+which can be fixed with a `from rdkit.Chem.Draw import IPythonConsole`.
 
 So it's up to you to remember to run:
 
@@ -49,11 +52,11 @@ So it's up to you to remember to run:
 PandasTools.AddMoleculeColumnToFrame(results, 'smiles', 'molecule', includeFingerprints=True)
 ```
 
-The argument `db` for `.search` is a string and is the name of the database. These do seem to change, so to update the
-class and choose one call:
+The argument `db` for `.search` is a string and is the name of the database. These do seem to change,
+so they get updated during initialisation or with the call:
 
 ```python
-SmallWorld.retrieve_databases()  #: pd.DataFrame (.db_choices gets updated too)
+dbs: pd.DataFrame = SmallWorld.retrieve_databases()  #: pd.DataFrame (.db_choices gets updated too)
 ```
 
 The dynamic properties `.REAL_dataset` and `.ZINC_dataset` simply return the best value from the presets, which may have
