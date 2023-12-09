@@ -3,7 +3,10 @@ from setuptools import setup, find_packages
 from warnings import warn
 
 sw_url = 'https://sw.docking.org/search.html'
-warn(f'DISCLAIMER: To use this API please make sure you can legally use the site {sw_url}')
+warn(f'''DISCLAIMER: To use the SmallWorld API please make sure you can legally query a server with it,
+for example {sw_url} by John Irwin.
+This tool is not affiliated with the great folk at NextMove Software nor the Irwin lab,
+but I am grateful for their smashing work and so should you so don't forget to cite them!''')
 
 # ----------- python version check
 import sys
