@@ -17,7 +17,7 @@ class Searcher(Extras):  # Defaults -> Common -> Base -> Extras -> Searcher -> S
         The first step.
         """
         try:
-            reply: requests.Response = self._retrieve(url='/search/submit', params=params)
+            reply: requests.Response = self._retrieve(url=self.search_route, params=params)
             line_iter = reply.iter_lines(decode_unicode=True)
             line_iter = map(str.strip, map(str, line_iter))
             line_iter = filter(lambda line: re.search(r'data:', line), line_iter)
@@ -46,7 +46,7 @@ class Searcher(Extras):  # Defaults -> Common -> Base -> Extras -> Searcher -> S
                       draw=draw
                       )
         params = {**params, **self.valid_export_columns}
-        reply = self._retrieve(url='/search/view',
+        reply = self._retrieve(url=self.view_route,
                                params=params)
         if not reply.json()["recordsTotal"]:
             raise NoMatchError(f'There are {reply.json()["recordsTotal"]} hits in the reply')

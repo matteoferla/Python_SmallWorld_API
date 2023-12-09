@@ -1,6 +1,10 @@
 class Defaults:  # Defaults -> Common -> Base -> Extras -> Searcher -> SmallWorld
 
+    # routes to API endpoints
     base_url = 'https://sw.docking.org'
+    search_route = '/search/submit'
+    view_route = '/search/view'
+
     stream_response = True
 
     # database choice list is updated with ``df = SmallWorld.retrieve_databases()``
