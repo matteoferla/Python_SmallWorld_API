@@ -1,23 +1,36 @@
 # Python_SmallWorld_API
 
-> This is Unofficial. So please do not abuse it or use it when you cannot legally use the site!
-
-An (unofficial) Python3 module to query the SmallWorld chemical space search server (https://sw.docking.org/search.html)
-.
+An unofficial Python3 module to query a SmallWorld chemical space search server.
 
 [![Documentation Status](https://readthedocs.org/projects/python-smallworld-api/badge/?version=latest)](https://python-smallworld-api.readthedocs.io/en/latest/?badge=latest)
 [![https img shields io pypi v smallworld api logo python](https://img.shields.io/pypi/v/smallworld--api?logo=python)](https://pypi.org/project/smallworld--api)   [![https img shields io pypi pyversions smallworld api logo python](https://img.shields.io/pypi/pyversions/smallworld--api?logo=python)](https://pypi.org/project/smallworld--api)   [![https img shields io pypi wheel smallworld api logo python](https://img.shields.io/pypi/wheel/smallworld--api?logo=python)](https://pypi.org/project/smallworld--api)   [![https img shields io pypi format smallworld api logo python](https://img.shields.io/pypi/format/smallworld--api?logo=python)](https://pypi.org/project/smallworld--api)   [![https img shields io pypi status smallworld api logo python](https://img.shields.io/pypi/status/smallworld--api?logo=python)](https://pypi.org/project/smallworld--api)   [![https img shields io pypi dm smallworld api logo python](https://img.shields.io/pypi/dm/smallworld--api?logo=python)](https://pypi.org/project/smallworld--api)   [![https img shields io codeclimate maintainability matteoferla Python_SmallWorld_API logo codeclimate](https://img.shields.io/codeclimate/maintainability/matteoferla/Python_SmallWorld_API?logo=codeclimate)](https://codeclimate.com/github/matteoferla/Python_SmallWorld_API)   [![https img shields io codeclimate issues matteoferla Python_SmallWorld_API logo codeclimate](https://img.shields.io/codeclimate/issues/matteoferla/Python_SmallWorld_API?logo=codeclimate)](https://codeclimate.com/github/matteoferla/Python_SmallWorld_API)   [![https img shields io codeclimate tech debt matteoferla Python_SmallWorld_API logo codeclimate](https://img.shields.io/codeclimate/tech-debt/matteoferla/Python_SmallWorld_API?logo=codeclimate)](https://codeclimate.com/github/matteoferla/Python_SmallWorld_API)   [![https img shields io github forks matteoferla Python_SmallWorld_API label Fork style social logo github](https://img.shields.io/github/forks/matteoferla/Python_SmallWorld_API?label=Fork&style=social&logo=github)](https://github.com/matteoferla/Python_SmallWorld_API)   [![https img shields io github stars matteoferla Python_SmallWorld_API style social logo github](https://img.shields.io/github/stars/matteoferla/Python_SmallWorld_API?style=social&logo=github)](https://github.com/matteoferla/Python_SmallWorld_API)   [![https img shields io github watchers matteoferla Python_SmallWorld_API label Watch style social logo github](https://img.shields.io/github/watchers/matteoferla/Python_SmallWorld_API?label=Watch&style=social&logo=github)](https://github.com/matteoferla/Python_SmallWorld_API)   [![https img shields io github last commit matteoferla Python_SmallWorld_API logo github](https://img.shields.io/github/last-commit/matteoferla/Python_SmallWorld_API?logo=github)](https://github.com/matteoferla/Python_SmallWorld_API)   [![https img shields io github license matteoferla Python_SmallWorld_API logo github](https://img.shields.io/github/license/matteoferla/Python_SmallWorld_API?logo=github)](https://github.com/matteoferla/Python_SmallWorld_API/raw/master/LICENCE)   [![https img shields io github release date matteoferla Python_SmallWorld_API logo github](https://img.shields.io/github/release-date/matteoferla/Python_SmallWorld_API?logo=github)](https://github.com/matteoferla/Python_SmallWorld_API)   [![https img shields io github commit activity m matteoferla Python_SmallWorld_API logo github](https://img.shields.io/github/commit-activity/m/matteoferla/Python_SmallWorld_API?logo=github)](https://github.com/matteoferla/Python_SmallWorld_API)   [![https img shields io github issues matteoferla Python_SmallWorld_API logo github](https://img.shields.io/github/issues/matteoferla/Python_SmallWorld_API?logo=github)](https://github.com/matteoferla/Python_SmallWorld_API)   [![https img shields io github issues closed matteoferla Python_SmallWorld_API logo github](https://img.shields.io/github/issues-closed/matteoferla/Python_SmallWorld_API?logo=github)](https://github.com/matteoferla/Python_SmallWorld_API)
 
+
+### Disclaimer
+> This is Unofficial So please do not abuse it or use it when you cannot legally use the site!
+
+SmallWorld is a search engine for chemical space developed by John Mayfield and Roger Sayle at [NextMove Software](https://www.nextmovesoftware.com/).
+John Irwin and Brian Shoichet at UCSF (the creators and maintainers of the [ZINC](https://zinc.docking.org/) database),
+host a version of it at [sw.docking.org](https://sw.docking.org/search.html) along with another NextMove Software product,
+[Arthor](https://arthor.docking.org/).
+
 ## Overview
 
-The SmallWorld server, [sw.docking.org](https://sw.docking.org/search.html), allows one to search for similar compounds
+SmallWorld allows one to search for similar compounds
 to a give [SMILES](https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system)
 in one of many databases —a very complex feat.
+
+A copy is hosted at [sw.docking.org](https://sw.docking.org/search.html) by John Irwin, Brian Shoichet and co.
+This is a free service, but it is not intended for heavy use.
+To change the endpoint, one can change the class attribute `SmallWorld.base_url` to a different URL.
+The folk at NextMove Software deploy instances of it for paying customers —and with full support.
 
 The API points of the site are described in
 [wiki.docking.org/index.php/How_to_use_SmallWorld_API](https://wiki.docking.org/index.php/How_to_use_SmallWorld_API).
 
 This Python3 module allows one to search it.
+
+For searches in Arthor, Zinc and EnamineStore see elsewhere.
 
 ## Install
 
@@ -25,7 +38,7 @@ This Python3 module allows one to search it.
 
 ## Usage
 The following searches for Aspirin in Enamine's make-on-demand space, Enamine REAL, which does not contain it
-as the latter is filtered by Lipinski's rule of five.
+as the latter is filtered by Lipinski's rule of five (Aspirin is actually [a terrible placeholder drug](https://www.blopig.com/blog/2023/08/placeholder-compounds-distraction-vs-accuracy/))
 
 ```python
 from rdkit import Chem
@@ -34,6 +47,7 @@ import pandas as pd  # for typehinting below
 
 from smallworld_api import SmallWorld
 
+print(SmallWorld.base_url)  # 'https://sw.docking.org'
 aspirin = 'O=C(C)Oc1ccccc1C(=O)O'
 sw = SmallWorld()
 results : pd.DataFrame = sw.search(aspirin, dist=5, db=sw.REAL_dataset)
