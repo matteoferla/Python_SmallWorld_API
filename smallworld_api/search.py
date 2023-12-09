@@ -19,7 +19,7 @@ class Searcher(Extras):  # Defaults -> Common -> Base -> Extras -> Searcher -> S
         try:
             reply: requests.Response = self._retrieve(url='/search/submit', params=params)
             line_iter = reply.iter_lines(decode_unicode=True)
-            line_iter = map(str.strip, line_iter)
+            line_iter = map(str.strip, map(str, line_iter))
             line_iter = filter(lambda line: re.search(r'data:', line), line_iter)
             # using iter_lines + in stream mode does not solve the major tom hanging issue...
             reply_data: List[Dict[str, Any]] = list()
