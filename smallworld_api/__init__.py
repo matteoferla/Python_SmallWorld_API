@@ -65,7 +65,7 @@ class SmallWorld(Searcher):
         The dataframe is not rdkit modified yet.
         """
         start = int(other_parameters['start']) if 'start' in other_parameters else 0
-        dist = int(other_parameters['dist']) if 'start' in other_parameters else 0
+        dist = int(other_parameters['dist']) if 'dist' in other_parameters else 0
         length = int(other_parameters['length']) if 'length' in other_parameters else 10
         draw = int(other_parameters['draw']) if 'draw' in other_parameters else 10
         valids = {k: other_parameters[k] for k in self.valid_submit_keys if k in other_parameters}
@@ -115,7 +115,7 @@ class SmallWorld(Searcher):
         for name, item in iterator:
             # ## what is it?
             if isinstance(item, str):
-                # its a smiles
+                # it's a smiles
                 smiles = item
             elif self.is_this_mol(item):
                 # rdkit
@@ -145,11 +145,18 @@ class SmallWorld(Searcher):
             try:
                 self.reset()
                 result: pd.DataFrame = self.search_smiles(smiles=smiles, db=db, **other_parameters)
+                if result.empty:
+                    continue
                 result['query_index'] = name
                 result['query_smiles'] = smiles
                 results.append(result)
             except tolerated_exceptions as error:
                 warn(f'{error.__class__.__name__}: {error} for {name}')
+            # end of loop
+        if not results:
+            raise NoMatchError('No results were found in SmallWorld. ' +
+                               'Considering changing `dist` (distance by N of mismatches) or '
+                               '`length` (number of results) greater than zero')
         return pd.concat(results, axis='index', ignore_index=True)
 
     def search(self, query: Any, db: str, **other_parameters) -> pd.DataFrame:
