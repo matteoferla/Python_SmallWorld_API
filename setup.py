@@ -29,7 +29,7 @@ description = f'An (unofficial) Python3 module to query the SmallWorld chemical 
 
 setup(
     name='smallworld-api',
-    version='1.1.3',
+    version='1.1.4',
     python_requires='>=3.7',
     packages=find_packages(),
     install_requires=['pandas', 'requests', 'ipython'],  # rdkit is optional.
